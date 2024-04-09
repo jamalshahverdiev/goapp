@@ -43,7 +43,7 @@ func (rw *responseWriter) WriteHeader(code int) {
 
 func newPrometheusMiddleware(next httprouter.Handle) httprouter.Handle {
     return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-        wrappedWriter := &responseWriter{ResponseWriter: w, statusCode: 200} // Default to 200 unless set otherwise
+        wrappedWriter := &responseWriter{ResponseWriter: w, statusCode: 200} 
         next(wrappedWriter, r, ps)
 
         httpRequestsTotal.With(prometheus.Labels{
