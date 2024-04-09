@@ -1,0 +1,17 @@
+{{- if .Values.service.create }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ default (trunc 15 .Release.Name) (trunc 15 .Values.global.appName) }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: {{ .Values.global.appName }}
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+  selector:
+    {{- include "common.selectorLabels" . | nindent 4 }}
+{{- end }}
