@@ -43,6 +43,6 @@ spec:
   selector:
     component: {{ .Chart.Name }}-goapp
   ports:
-  - name: {{ .Chart.Name }}-goapp
+  - name: goapp
     port: 8080
     protocol: TCP

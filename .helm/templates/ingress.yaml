@@ -2,17 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    ingressClassName: nginx
-  name: {{ .Chart.Name }}
+    kubernetes.io/ingress.class: nginx
+  name: {{ .Chart.Name }}-goapp
 spec:
   rules:
   - host: {{ .Values.dns }}
     http:
       paths:
       - path: /
-        pathType: ImplementationSpecific
+        pathType: Prefix
         backend:
           service:
-            name: {{ .Chart.Name }}
+            name: {{ .Chart.Name }}-goapp
             port:
               number: 8080
