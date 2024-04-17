@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}
+  name: {{ .Chart.Name }}-goapp
 spec:
   selector:
     matchLabels:
-      component: {{ .Chart.Name }}
+      component: {{ .Chart.Name }}-goapp
   replicas: {{ float64 .Values.go_app.replicas }}
   template:
     metadata:
       labels:
-        component: {{ .Chart.Name }}
+        component: {{ .Chart.Name }}-goapp
     spec:
       containers:
-      - name: {{ .Chart.Name }}
+      - name: {{ .Chart.Name }}-goapp
         image: {{ .Values.go_app.image }}
         ports:
         - containerPort: 8080
@@ -38,11 +38,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Chart.Name }}
+  name: {{ .Chart.Name }}-goapp
 spec:
   selector:
-    component: {{ .Chart.Name }}
+    component: {{ .Chart.Name }}-goapp
   ports:
-  - name: {{ .Chart.Name }}
+  - name: {{ .Chart.Name }}-goapp
     port: 8080
     protocol: TCP
