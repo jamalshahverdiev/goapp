@@ -1,1 +1,1 @@
-helm upgrade --install devops-test-task .helm/ --values .helm/values.yaml
+helm upgrade -n devops-test-task --create-namespace -i devops-test-task .helm/ 
