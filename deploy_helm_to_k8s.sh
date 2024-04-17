@@ -1,0 +1,1 @@
+helm upgrade --install devops-test-task .helm/ --values .helm/values.yaml

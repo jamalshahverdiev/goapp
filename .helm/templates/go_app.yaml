@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       component: {{ .Chart.Name }}
-  replicas: {{ pluck .Values.global.env .Values.go_app.replicas | first }}
+  replicas: {{ float64 .Values.go_app.replicas }}
   template:
     metadata:
       labels:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: {{ pluck .Values.global.env .Values.go_app.image | first }}
+        image: {{ .Values.go_app.image }}
         ports:
         - containerPort: 8080
           protocol: TCP
@@ -33,7 +33,7 @@ spec:
         env:
         {{- include "go_app_env" . | indent 8 }}
         resources:
-          {{- toYaml (pluck .Values.global.env .Values.go_app.resources | first | nindent 12 }}
+          {{- toYaml (.Values.go_app.resources) | nindent 12 }}
 ---
 apiVersion: v1
 kind: Service

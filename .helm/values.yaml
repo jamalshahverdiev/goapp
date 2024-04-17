@@ -1,3 +1,5 @@
+dns: localhost
+
 go_app:
   image: pilprod/devops-test-task:latest
   redis_adr: redis:6379

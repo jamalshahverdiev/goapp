@@ -7,7 +7,7 @@ spec:
     matchLabels:
       component: {{ .Chart.Name }}-redis
   serviceName: redis
-  replicas: {{ pluck .Values.global.env .Values.redis.replicas | first }}
+  replicas: {{ float64 .Values.redis.replicas }}
   template:
     metadata:
       labels:
@@ -15,15 +15,13 @@ spec:
     spec:
       containers:
       - name: redis
-        image: {{ pluck .Values.global.env .Values.redis.image | first }}
+        image: {{ .Values.redis.image }}
         ports:
-        - containerPort: {{ pluck .Values.global.env .Values.redis.redis_port | first }}
+        - containerPort: {{ float64 .Values.redis.redis_port }}
           name: redis
           protocol: TCP
         env:
         {{- include "redis_env" . | indent 8 }}
-        resources:
-          {{- toYaml (pluck .Values.global.env .Values.redis.resources | first | nindent 12 }}
   volumeClaimTemplates:
   - metadata:
       name: {{ .Chart.Name }}-redis
@@ -42,5 +40,5 @@ spec:
     component: {{ .Chart.Name }}-redis
   ports:
   - name: redis
-    port: {{ pluck .Values.global.env .Values.redis.redis_port | first }}
+    port: {{ float64 .Values.redis.redis_port }}
     protocol: TCP
