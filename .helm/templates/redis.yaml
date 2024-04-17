@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}-redis
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Chart.Name }}-redis
+  serviceName: redis
+  replicas: {{ pluck .Values.global.env .Values.redis.replicas | first }}
+  template:
+    metadata:
+      labels:
+        component: {{ .Chart.Name }}-redis
+    spec:
+      containers:
+      - name: redis
+        image: {{ pluck .Values.global.env .Values.redis.image | first }}
+        ports:
+        - containerPort: {{ pluck .Values.global.env .Values.redis.redis_port | first }}
+          name: redis
+          protocol: TCP
+        env:
+        {{- include "redis_env" . | indent 8 }}
+        resources:
+          {{- toYaml (pluck .Values.global.env .Values.redis.resources | first | nindent 12 }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Chart.Name }}-redis
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    component: {{ .Chart.Name }}-redis
+  ports:
+  - name: redis
+    port: {{ pluck .Values.global.env .Values.redis.redis_port | first }}
+    protocol: TCP

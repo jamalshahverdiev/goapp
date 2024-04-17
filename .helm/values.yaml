@@ -1,0 +1,21 @@
+go_app:
+  image: pilprod/devops-test-task:latest
+  redis_adr: redis:6379
+  replicas: 1
+  resources:
+    limits:
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+redis:
+  image: redis:7.2.4-alpine
+  redis_port: 6379
+  replicas: 1
+  resources:
+    limits:
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi

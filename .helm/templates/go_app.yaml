@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Chart.Name }}
+  replicas: {{ pluck .Values.global.env .Values.go_app.replicas | first }}
+  template:
+    metadata:
+      labels:
+        component: {{ .Chart.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ pluck .Values.global.env .Values.go_app.image | first }}
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        env:
+        {{- include "go_app_env" . | indent 8 }}
+        resources:
+          {{- toYaml (pluck .Values.global.env .Values.go_app.resources | first | nindent 12 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  selector:
+    component: {{ .Chart.Name }}
+  ports:
+  - name: {{ .Chart.Name }}
+    port: 8080
+    protocol: TCP
