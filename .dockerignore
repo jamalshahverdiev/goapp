@@ -3,5 +3,5 @@ docker-compose.yaml
 .gitignore
 .dockerignore
 README.md
-availability.sh
+*.sh
 .helm
