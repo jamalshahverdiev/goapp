@@ -1,6 +1,6 @@
 {{- define "go_app_env" }}
 - name: REDIS_ADDR
-  value: {{ .Values.go_app.redis_adr }}
+  value: {{ .Chart.Name }}-{{ .Values.go_app.redis_adr }}
 {{- end }}
 
 {{- define "redis_env" }}
