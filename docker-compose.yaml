@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  go_app:
+    build: ./
+    depends_on:
+      - redis
+    environment:
+      REDIS_ADDR: redis:6379
+    ports:
+      - "8080:8080"
+  
+  redis:
+    image: redis:7.2.4-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./dаta:/root/redis
+
