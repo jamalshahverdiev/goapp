@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Check availability sh script
-GO_URL="goapp.local"
+GO_URL=""
 
 availability=$(curl -X GET -s -o /dev/null -w "%{http_code}" "$GO_URL")
 if [ $availability != 200 ]; then

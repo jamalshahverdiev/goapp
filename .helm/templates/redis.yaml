@@ -15,13 +15,26 @@ spec:
     spec:
       containers:
       - name: redis
+        imagePullPolicy: Always
         image: {{ .Values.redis.image }}
         ports:
         - containerPort: {{ float64 .Values.redis.redis_port }}
           name: redis
           protocol: TCP
+        volumeMounts:
+        - name: {{ .Chart.Name }}-redis
+          mountPath: /data
         env:
         {{- include "redis_env" . | indent 8 }}
+      # - name: redis-exporter
+      #   image: oliver006/redis_exporter
+      #   ports:
+      #   - containerPort: 9121
+      #     name: exporter-port
+      #     protocol: TCP
+      #   volumeMounts:
+      #   - name: {{ .Chart.Name }}-redis
+      #     mountPath: /data
   volumeClaimTemplates:
   - metadata:
       name: {{ .Chart.Name }}-redis
@@ -42,3 +55,6 @@ spec:
   - name: redis
     port: {{ float64 .Values.redis.redis_port }}
     protocol: TCP
+  # - name: redis-exporter
+  #   port: 9121
+  #   protocol: TCP

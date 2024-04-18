@@ -1,1 +1,0 @@
-helm upgrade -n devops-test-task --create-namespace -i devops-test-task .helm/ 

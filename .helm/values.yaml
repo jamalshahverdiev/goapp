@@ -1,4 +1,4 @@
-dns: localhost
+dns: goapp.local
 
 go_app:
   image: pilprod/devops-test-task:latest
