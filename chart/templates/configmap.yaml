@@ -1,0 +1,10 @@
+{{- if .Values.configmap.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ default .Values.configmap.name (trunc 15 .Values.global.appName) }}
+data:
+  {{- range .Values.configmap.keys }}
+  {{ .key }}: {{ .keyValue | quote }}
+  {{- end }}
+{{- end }}

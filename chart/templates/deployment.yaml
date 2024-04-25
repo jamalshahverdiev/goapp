@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ default .Release.Name (trunc 15 .Values.global.appName) }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "common.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ default .Release.Name (trunc 15 .Values.global.appName) }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ default .Release.Name (trunc 15 .Values.global.appName) }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          {{- if .Values.secret.enabled }}
+            {{- $secretName := default .Values.secret.name (trunc 15 .Values.global.appName) }}
+            {{- range .Values.secret.keys }}
+            - name: {{ .varName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $secretName }}
+                  key: {{ .key }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.configmap.enabled }}
+            {{- $configName := default .Values.configmap.name (trunc 15 .Values.global.appName) }}  
+            {{- range .Values.configmap.keys }}
+            - name: {{ .varName }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $configName }}
+                  key: {{ .key }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - name: {{ default (trunc 15 .Release.Name) (trunc 15 .Values.global.appName) }}
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+          {{- if and (eq .Values.livenessProbe.enabled true) (eq .Values.livenessProbe.type "http") }}     
+          livenessProbe:
+            httpGet:
+              {{- range $key, $value := .Values.livenessProbe.httpGet }}
+              {{ $key }}: {{ $value }}
+              {{- end }}
+          {{- end }}
+          {{- if and (eq .Values.readinessProbe.enabled true) (eq .Values.readinessProbe.type "http") }}
+          readinessProbe:
+            httpGet:
+              {{- range $key, $value := .Values.readinessProbe.httpGet }}
+              {{ $key }}: {{ $value }}
+              {{- end }}
+          {{- end }}    
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

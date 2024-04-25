@@ -1,0 +1,84 @@
+global:
+  appName: goapp
+
+replicaCount: 1
+
+serviceMonitor:
+  enabled: true
+  labels:
+    release: prometheus-operator
+
+redis:
+  enabled: true
+
+service:
+  create: true
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+secret:
+  enabled: false
+  name: appsecret
+  keys:
+    - varName: USERNAME
+      key: "username"
+      keyValue: "c2FsYW0K"
+      
+configmap:
+  enabled: true
+  name: appconfigmap
+  keys: 
+    - varName: REDIS_ADDR
+      key: REDIS_ADDR
+      keyValue: "redis:6379"
+     
+livenessProbe:
+  enabled: false
+  type: http
+  httpGet:
+    path: "/health-check"
+    port: 3000
+    scheme: HTTP
+
+readinessProbe:
+  enabled: false
+  type: http
+  httpGet:
+    path: "/health-check"
+    port: 3000
+    scheme: HTTP
+
+image:
+  repository: jamalshahverdiev/game
+  pullPolicy: IfNotPresent
+  tag: "0.0.2"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  namePrefix: "default-prefix"
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
