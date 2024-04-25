@@ -37,6 +37,184 @@ data:
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "color": "semi-dark-red",
+                      "index": 1,
+                      "text": "Not Available"
+                    },
+                    "1": {
+                      "color": "semi-dark-green",
+                      "index": 0,
+                      "text": "Available"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 8,
+            "x": 0,
+            "y": 0
+          },
+          "id": 20,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {
+              "valueSize": 50
+            },
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "10.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "goapp_availability",
+              "format": "table",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "interval": "",
+              "legendFormat": "{{label_name}}",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Golang | Healthcheck",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "color": "semi-dark-red",
+                      "index": 1,
+                      "text": "Fail"
+                    },
+                    "1": {
+                      "color": "semi-dark-green",
+                      "index": 0,
+                      "text": "Passed"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 8,
+            "x": 8,
+            "y": 0
+          },
+          "id": 19,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {
+              "valueSize": 50
+            },
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "10.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "goapp_tests",
+              "format": "table",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "interval": "",
+              "legendFormat": "{{label_name}}",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Golang | Functional Testing",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -73,9 +251,9 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 7,
-            "w": 4,
-            "x": 0,
+            "h": 5,
+            "w": 8,
+            "x": 16,
             "y": 0
           },
           "hideTimeOverride": true,
@@ -104,126 +282,26 @@ data:
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "sum(redis_connected_clients{instance=~\"$instance\"})",
-              "format": "time_series",
-              "intervalFactor": 2,
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "redis_connected_clients",
+              "format": "table",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "intervalFactor": 1,
               "legendFormat": "",
               "metric": "",
+              "range": true,
               "refId": "A",
-              "step": 2
+              "step": 2,
+              "useBackend": false
             }
           ],
           "timeFrom": "1m",
-          "title": "Clients",
+          "title": "Redis | Clients",
           "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 5,
-            "x": 4,
-            "y": 0
-          },
-          "id": 16,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "10.3.3",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "expr": "sum(redis_connected_clients{instance=~\"$instance\"})",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "connected",
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "expr": "sum(redis_blocked_clients{instance=~\"$instance\"})",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "blocked",
-              "refId": "B"
-            }
-          ],
-          "title": "Connected/Blocked Clients",
-          "type": "timeseries"
         },
         {
           "datasource": {
@@ -287,10 +365,10 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 7,
+            "h": 10,
             "w": 8,
-            "x": 9,
-            "y": 0
+            "x": 0,
+            "y": 5
           },
           "id": 18,
           "options": {
@@ -312,17 +390,23 @@ data:
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "sum(rate(redis_commands_total{instance=~\"$instance\"} [1m])) by (cmd)",
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "rate(redis_commands_total[1m])",
               "format": "time_series",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "{{ cmd }}",
               "metric": "redis_command_calls_total",
+              "range": true,
               "refId": "A",
-              "step": 240
+              "step": 240,
+              "useBackend": false
             }
           ],
-          "title": "Total Commands / sec",
+          "title": "Redis | Total Commands / sec",
           "type": "timeseries"
         },
         {
@@ -433,10 +517,10 @@ data:
             ]
           },
           "gridPos": {
-            "h": 7,
-            "w": 7,
-            "x": 17,
-            "y": 0
+            "h": 10,
+            "w": 8,
+            "x": 8,
+            "y": 5
           },
           "id": 8,
           "options": {
@@ -458,103 +542,179 @@ data:
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "sum(rate(redis_expired_keys_total{instance=~\"$instance\"}[5m])) by (instance)",
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "rate(redis_expired_keys_total[5m])",
               "format": "time_series",
+              "fullMetaSearch": false,
               "hide": false,
+              "includeNullMetadata": true,
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "expired, {{ instance }}",
               "metric": "",
+              "range": true,
               "refId": "A",
               "step": 240,
-              "target": ""
+              "target": "",
+              "useBackend": false
             },
             {
               "datasource": {
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "sum(rate(redis_evicted_keys_total{instance=~\"$instance\"}[5m])) by (instance)",
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "rate(redis_evicted_keys_total{instance=~\"$instance\"}[5m])",
               "format": "time_series",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "evicted, {{ instance }}",
+              "range": true,
               "refId": "B",
-              "step": 240
+              "step": 240,
+              "useBackend": false
             }
           ],
-          "title": "Expired/Evicted Keys",
+          "title": "Redis | Expired/Evicted Keys",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 16,
+            "y": 5
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "10.3.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "redis_connected_clients",
+              "format": "time_series",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "intervalFactor": 1,
+              "legendFormat": "connected",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "redis_blocked_clients{instance=~\"$instance\"}",
+              "format": "time_series",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "intervalFactor": 1,
+              "legendFormat": "blocked",
+              "range": true,
+              "refId": "B",
+              "useBackend": false
+            }
+          ],
+          "title": "Redis | Connected/Blocked Clients",
           "type": "timeseries"
         }
       ],
+      "refresh": "5s",
       "schemaVersion": 39,
       "tags": [
         "prometheus",
         "redis"
       ],
       "templating": {
-        "list": [
-          {
-            "current": {
-              "selected": false,
-              "text": "devops-test-task",
-              "value": "devops-test-task"
-            },
-            "datasource": {
-              "type": "prometheus",
-              "uid": "PBFA97CFB590B2093"
-            },
-            "definition": "label_values(redis_up, namespace)",
-            "hide": 0,
-            "includeAll": false,
-            "multi": false,
-            "name": "namespace",
-            "options": [],
-            "query": "label_values(redis_up, namespace)",
-            "refresh": 2,
-            "regex": "",
-            "skipUrlSync": false,
-            "sort": 1,
-            "tagValuesQuery": "",
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
-          },
-          {
-            "current": {
-              "selected": false,
-              "text": [
-                "prometheus-redis-exporter"
-              ],
-              "value": [
-                "prometheus-redis-exporter"
-              ]
-            },
-            "datasource": {
-              "type": "prometheus",
-              "uid": "PBFA97CFB590B2093"
-            },
-            "definition": "label_values(redis_up{namespace=~\"$namespace\"}, instance)",
-            "hide": 0,
-            "includeAll": false,
-            "multi": true,
-            "name": "instance",
-            "options": [],
-            "query": "label_values(redis_up{namespace=~\"$namespace\"}, instance)",
-            "refresh": 2,
-            "regex": "",
-            "skipUrlSync": false,
-            "sort": 1,
-            "tagValuesQuery": "",
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
-          }
-        ]
+        "list": []
       },
       "time": {
-        "from": "2024-04-18T00:24:08.687Z",
-        "to": "2024-04-18T00:26:11.165Z"
+        "from": "now-5m",
+        "to": "now"
       },
       "timepicker": {
         "refresh_intervals": [

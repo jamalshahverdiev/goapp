@@ -11,7 +11,7 @@ input=$(curl -s "$GO_URL")
 current_time=$(echo $input | grep -o -E '[0-9]{2}:[0-9]{2}:[0-9]{2}')   
 count=0
 
-for ((i=0; i<6; i++))
+for ((i=0; i<5; i++))
 do
   new_input=$(curl -s "$GO_URL")
   new_current_time=$(echo $new_input | grep -o -E '[0-9]{2}:[0-9]{2}:[0-9]{2}')

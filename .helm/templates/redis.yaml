@@ -26,15 +26,6 @@ spec:
           mountPath: /data
         env:
         {{- include "redis_env" . | indent 8 }}
-      # - name: redis-exporter
-      #   image: oliver006/redis_exporter
-      #   ports:
-      #   - containerPort: 9121
-      #     name: exporter-port
-      #     protocol: TCP
-      #   volumeMounts:
-      #   - name: {{ .Chart.Name }}-redis
-      #     mountPath: /data
   volumeClaimTemplates:
   - metadata:
       name: {{ .Chart.Name }}-redis

@@ -1,4 +1,48 @@
 # Devops Test
+
+### Documentation (only unix OS)
+
+> Dependencies: kubectl, helm, eksctl, aws, curl
+
+1. Specify environment variables for your aws account
+```bash
+export TF_VAR_cluster_name="<cluster_name>" 
+export TF_VAR_region="<aws_region>"
+export AWS_ACCOUNT_ID="<aws_account_id>"
+export AWS_ACCESS_KEY_ID="<aws_account_key_id>"
+export AWS_SECRET_ACCESS_KEY="<aws_account_access_key>"
+```
+
+2. Start delivery proccess
+```bash
+sh .cicd/deploy.sh # Wait 10-15 min
+```
+
+3. Check output
+```
+...
+cronjob.batch/goapp-exporter configured
+configmap/monitoring unchanged
+configmap/grafana-devops-test-task-dashboard unchanged
+fleet.agones.dev/xonotic unchanged
+
+Golang: http://<***>.elb.amazonaws.com
+
+Grafana: http://<***>.elb.amazonaws.com
+User: admin
+Pass: admin
+
+Xonotic: <ip>:<port>
+```
+
+### Monitoring
+![monitoring](monitoring.jpg)
+
+### Connect to gameserver
+![connect](connect.png)
+
+### Task
+```
 ### Overview
 This is an application that is a dummy webservice that returns the
 last update time.  The last updated time is cached in redis and
@@ -27,3 +71,4 @@ Please provide test monitoring results in any convenient form (files, images, ad
  
 ### Additional task
 Research https://agones.dev/site/. Deploy agones locally (minikube or docker desktop, kubernetes) or in any cloud. AWS is a big plus. Use https://github.com/googleforgames/agones/tree/main/examples/xonotic as dedicated server. Xonotic client should be able to join a dedicated server. Matchmaker or any other automatic fleet management is not required. Fleet could be managed manually with agones rest api. Provide documentation with steps how to reproduce the environment and test the game
+```

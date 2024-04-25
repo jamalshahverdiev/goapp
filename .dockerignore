@@ -5,3 +5,8 @@ docker-compose.yaml
 README.md
 *.sh
 .helm
+.monitoring
+.local
+.helm
+.cicd
+.agones

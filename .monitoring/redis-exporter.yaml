@@ -1,11 +1,10 @@
-redisAddress: redis://devops-test-task-redis:6379
+redisAddress: redis://redis:6379
 
 serviceMonitor:
   enabled: true
   multipleTarget: true
-  namespace: monitoring
   targets:
-  - url: redis://devops-test-task-redis:6379
+  - url: redis://redis:6379
     name: redis
     additionalRelabeling:
     - sourceLabels: [type]

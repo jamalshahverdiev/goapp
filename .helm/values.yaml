@@ -1,4 +1,4 @@
-dns: goapp.local
+dns: "goapp.pilprod.com"
 
 go_app:
   image: pilprod/devops-test-task:latest
