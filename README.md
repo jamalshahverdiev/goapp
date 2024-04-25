@@ -7,7 +7,7 @@
 1. Specify environment variables for your aws account
 ```bash
 export TF_VAR_cluster_name="<cluster_name>" 
-export TF_VAR_region="<aws_region>"
+export AWS_REGION="<aws_region>"
 export AWS_ACCOUNT_ID="<aws_account_id>"
 export AWS_ACCESS_KEY_ID="<aws_account_key_id>"
 export AWS_SECRET_ACCESS_KEY="<aws_account_access_key>"
@@ -15,7 +15,7 @@ export AWS_SECRET_ACCESS_KEY="<aws_account_access_key>"
 
 2. Start delivery proccess
 ```bash
-sh .cicd/deploy.sh # Wait 10-15 min
+sh .cicd/deploy.sh # Wait 15-20 min
 ```
 
 3. Check output

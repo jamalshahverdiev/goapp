@@ -52,30 +52,22 @@ data "aws_eks_cluster_auth" "default" {
   name = var.cluster_name
 }
 
-module "helm_agones" {
+# module "helm_agones" {
 
-  source = "git::https://github.com/googleforgames/agones.git//install/terraform/modules/helm3/?ref=main"
+#   source = "git::https://github.com/googleforgames/agones.git//install/terraform/modules/helm3/?ref=main"
 
-  udp_expose             = "true"
-  agones_version         = var.agones_version
-#   gameserver_namespaces  = ["default", "xonotic"]
-  values_file            = ""
-  feature_gates          = var.feature_gates
-  host                   = module.eks_cluster.host
-  token                  = data.aws_eks_cluster_auth.default.token
-  cluster_ca_certificate = module.eks_cluster.cluster_ca_certificate
-  log_level              = var.log_level
-}
+#   udp_expose             = "true"
+#   agones_version         = var.agones_version
+# #   gameserver_namespaces  = ["default", "xonotic"]
+#   feature_gates          = var.feature_gates
+#   host                   = module.eks_cluster.host
+#   token                  = data.aws_eks_cluster_auth.default.token
+#   cluster_ca_certificate = module.eks_cluster.cluster_ca_certificate
+# }
 
 output "host" {
   value = "${module.eks_cluster.host}"
 }
 output "cluster_ca_certificate" {
   value = "${module.eks_cluster.cluster_ca_certificate}"
-}
-
-resource "null_resource" "kubectl" {
-  provisioner "local-exec" {
-    command = "aws eks --region ${var.region}  update-kubeconfig --name ${var.cluster_name}"
-  }
 }
