@@ -1,0 +1,12 @@
+redisAddress: redis://redis:6379
+
+serviceMonitor:
+  enabled: true
+  multipleTarget: true
+  targets:
+  - url: redis://redis:6379
+    name: redis
+    additionalRelabeling:
+    - sourceLabels: [type]
+      targetLabel: type
+      replacement: cluster

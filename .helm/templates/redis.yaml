@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}-redis
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Chart.Name }}-redis
+  serviceName: redis
+  replicas: {{ float64 .Values.redis.replicas }}
+  template:
+    metadata:
+      labels:
+        component: {{ .Chart.Name }}-redis
+    spec:
+      containers:
+      - name: redis
+        imagePullPolicy: Always
+        image: {{ .Values.redis.image }}
+        ports:
+        - containerPort: {{ float64 .Values.redis.redis_port }}
+          name: redis
+          protocol: TCP
+        volumeMounts:
+        - name: {{ .Chart.Name }}-redis
+          mountPath: /data
+        env:
+        {{- include "redis_env" . | indent 8 }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Chart.Name }}-redis
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-redis
+spec:
+  selector:
+    component: {{ .Chart.Name }}-redis
+  ports:
+  - name: redis
+    port: {{ float64 .Values.redis.redis_port }}
+    protocol: TCP
+  # - name: redis-exporter
+  #   port: 9121
+  #   protocol: TCP

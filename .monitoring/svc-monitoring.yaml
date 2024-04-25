@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: goapp
+spec:
+  type: ExternalName
+  externalName: devops-test-task-goapp.devops-test-task.svc.cluster.local
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis
+spec:
+  type: ExternalName
+  externalName: devops-test-task-redis.devops-test-task.svc.cluster.local
+  ports:
+  - port: 6379
+    protocol: TCP
+    targetPort: 6379

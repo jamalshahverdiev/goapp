@@ -1,0 +1,5 @@
+export TF_VAR_cluster_name="" 
+export AWS_REGION=""
+export AWS_ACCOUNT_ID=""
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""

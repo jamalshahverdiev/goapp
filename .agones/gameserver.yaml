@@ -1,0 +1,26 @@
+apiVersion: agones.dev/v1
+kind: Fleet
+metadata:
+  name: xonotic
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      ports:
+        - name: default
+          protocol: UDP
+          containerPort: 26000
+      health:
+        initialDelaySeconds: 30
+        periodSeconds: 60
+      template:
+        spec:
+          containers:
+            - name: xonotic
+              image: us-docker.pkg.dev/agones-images/examples/xonotic-example:1.9
+              resources:
+                requests:
+                  memory: 700Mi
+                  cpu: 200m

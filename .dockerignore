@@ -1,0 +1,12 @@
+Dockerfile
+docker-compose.yaml
+.gitignore
+.dockerignore
+README.md
+*.sh
+.helm
+.monitoring
+.local
+.helm
+.cicd
+.agones

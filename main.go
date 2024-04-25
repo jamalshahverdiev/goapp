@@ -3,15 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
-	"github.com/julienschmidt/httprouter"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"go.uber.org/zap"
 	"log"
 	"net/http"
 	"os"
 	"time"
+	"github.com/go-redis/redis/v8"
+	"github.com/julienschmidt/httprouter"
+	"go.uber.org/zap"
 )
 
 type server struct {
@@ -93,9 +91,4 @@ func (s *server) indexHandler(w http.ResponseWriter, r *http.Request, _ httprout
 
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Hello world: updated_time=%s\n", v)
-}
-
-func (s *server) helloHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprint(w, "Hello world!")
 }

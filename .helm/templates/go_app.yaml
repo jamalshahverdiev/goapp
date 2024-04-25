@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-goapp
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Chart.Name }}-goapp
+  replicas: {{ float64 .Values.go_app.replicas }}
+  template:
+    metadata:
+      labels:
+        component: {{ .Chart.Name }}-goapp
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-goapp
+        image: {{ .Values.go_app.image }}
+        command: ["./app"]
+        workingDir: /usr/src/app
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        env:
+        {{- include "go_app_env" . | indent 8 }}
+        resources:
+          {{- toYaml (.Values.go_app.resources) | nindent 12 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-goapp
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    component: {{ .Chart.Name }}-goapp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-goapp-lb
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    component: {{ .Chart.Name }}-goapp
