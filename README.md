@@ -2,7 +2,7 @@
 
 ### Documentation (only unix OS)
 
-> Dependencies: kubectl, helm, eksctl, aws, curl
+> Dependencies: terraform, kubectl, helm, eksctl, aws, curl
 
 1. Specify environment variables for your aws account
 ```bash
@@ -21,6 +21,7 @@ sh .cicd/deploy.sh # Wait 10-15 min
 3. Check output
 ```
 ...
+
 cronjob.batch/goapp-exporter configured
 configmap/monitoring unchanged
 configmap/grafana-devops-test-task-dashboard unchanged
